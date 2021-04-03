@@ -13,16 +13,20 @@ setBreakingBadEpisodes = (episodes, season) => {
 
 
 // Funcion para desplegar las temporadas de Breaking Bad
-breakingBadShowSeasons = episodes => {
+breakingBadShowSeasons = (episodes, temporada) => {
     const ul = document.querySelector("#Breaking-Bad-Temporadas");
     var episodeArray = [];
     episodes.forEach(episode => {
         // Chequea no existe la temporada y realiza la logica
         if (!episodeArray.includes(episode.season)) {
-           
+            // Se despliega segun la logica
             let li = document.createElement("li");
-            li.innerHTML = `<input type="checkbox" name="list" id="nivel1-${episode.season}"><label for="nivel1-${episode.season}">Temporada ${episode.season}</label><ul class="interior">${setBreakingBadEpisodes(episodes, episode.season)}</ul>`;
-            
+            if (temporada === episode.season) {
+                li.innerHTML = `<input type="checkbox" checked=true name="list" id="nivel1-${episode.season}"><label for="nivel1-${episode.season}">Temporada ${episode.season}</label><ul class="interior">${setBreakingBadEpisodes(episodes, episode.season)}</ul>`;
+            }
+            else {
+                li.innerHTML = `<input type="checkbox" name="list" id="nivel1-${episode.season}"><label for="nivel1-${episode.season}">Temporada ${episode.season}</label><ul class="interior">${setBreakingBadEpisodes(episodes, episode.season)}</ul>`;
+            }
             // Se agregan entre si las etiquetas
             ul.append(li);
             // Se agrega al array
@@ -31,11 +35,12 @@ breakingBadShowSeasons = episodes => {
     });
 }
 
+
 // Obtener todos los episodios de Breaking Bad
-getBreakingBadEpisodes = () => {
+getBreakingBadEpisodes = (temporada) => {
     fetch('https://tarea-1-breaking-bad.herokuapp.com/api/episodes?series=Breaking+Bad')
     .then(response => response.json())
-    .then(data => breakingBadShowSeasons(data))
+    .then(data => breakingBadShowSeasons(data, temporada))
     };
 
 

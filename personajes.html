@@ -32,16 +32,15 @@
     </div>
     </nav>
     <!--Se despliega la informacion del capitulo-->
-    <div id="Personaje">
+    <div id="Character">
+        <h1>Descripción del personaje</h1>
         <script>
             // Obtener la variable para consultar por la API
             let queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
             let name = urlParams.get("name");
-            /* Funcion para obtener data de personaje 
-            showCharacter(name);
-            */
-
+            /* Funcion para obtener data de personaje */
+            getCharacter(name);
         </script>
     </div>
 </body>

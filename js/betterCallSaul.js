@@ -12,20 +12,19 @@ setBetterCallSaulEpisodes = (episodes, season) => {
 }
 
 // Funcion para desplegar las temporadas de Better Call Saul
-betterCallSaulShowSeasons = episodes => {
+betterCallSaulShowSeasons = (episodes, temporada) => {
     const ul = document.querySelector("#Better-Call-Saul-Temporadas");
     var episodeArray = [];
     episodes.forEach(episode => {
         // Chequea no existe la temporada y realiza la logica
         if (!episodeArray.includes(episode.season)) {
-            // Se agrega la info a modo de HTML
-            //let a = document.createElement("a");
-            //a.setAttribute('href', `temporadas.html?series=Better+Call+Saul&season=${episode.season}`);
-            //a.innerText = `Temporada: ${episode.season}`;
-
+            // Se despliega segun la logica
             let li = document.createElement("li");
-            li.innerHTML = `<input type="checkbox" name="list" id="2-${episode.season}"><label for="2-${episode.season}">Temporada ${episode.season}</label>\n<ul class="interior">\n${setBetterCallSaulEpisodes(episodes, episode.season)}</ul>`;
-
+            if (temporada === episode.season) {
+                li.innerHTML = `<input type="checkbox" checked=true name="list" id="nivel2-${episode.season}"><label for="nivel2-${episode.season}">Temporada ${episode.season}</label>\n<ul class="interior">\n${setBetterCallSaulEpisodes(episodes, episode.season)}</ul>`;
+            } else {
+                li.innerHTML = `<input type="checkbox" name="list" id="nivel2-${episode.season}"><label for="nivel2-${episode.season}">Temporada ${episode.season}</label>\n<ul class="interior">\n${setBetterCallSaulEpisodes(episodes, episode.season)}</ul>`;
+            }
             // Se agregan entre si las etiquetas
             ul.append(li);
             // Se agrega al array
@@ -35,8 +34,8 @@ betterCallSaulShowSeasons = episodes => {
 }
 
 // Obtener todos los episodios de Better Call Saul
-getBetterCallSaulEpisodes = () => {
+getBetterCallSaulEpisodes = (temporada) => {
     fetch('https://tarea-1-breaking-bad.herokuapp.com/api/episodes?series=Better+Call+Saul')
     .then(response => response.json())
-    .then(data => betterCallSaulShowSeasons(data));
+    .then(data => betterCallSaulShowSeasons(data, temporada));
 };

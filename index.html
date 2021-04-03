@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="Tarea1" content="width=device-width, initial-scale=1.0">
     <title>Tarea 1</title>
-    
+
     <link rel="stylesheet" href="css/application.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -12,30 +12,41 @@
     
     <script src="js/breakingBad.js"></script>
     <script src="js/betterCallSaul.js"></script>
+    <script src="js/index.js"></script>
 </head>
 <body>
     <!--Se crea una barra de navegacion-->
     <nav class="navbar navbar-expand-md navbar-dark  bg-dark">
-        <a class="navbar-brand" href="#">Tarea 1 - Taller de Integracion</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-          </ul>
-          <!--Busqueda-->
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
+      <a class="navbar-brand" href="#">Tarea 1 - Taller de Integracion</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <!--Busqueda-->
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    <script>
+      // Ver si tiene QueryParams
+      let queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+    </script>
     <!--Se despliegan las temporadas-->
     <div id="Breaking-Bad">
       <h1>Temporadas Breaking Bad</h1>
       <ul id="Breaking-Bad-Temporadas">
         <script language="javascript">
-          getBreakingBadEpisodes();
+          if ((urlParams.get("series")==="Breaking Bad") && urlParams.has("temporada")) {
+            getBreakingBadEpisodes(urlParams.get("temporada"));
+          }
+          else {
+            getBreakingBadEpisodes(0);
+          }
         </script>
       </ul>
     </div>
@@ -43,9 +54,17 @@
       <h1>Temporadas Better Call Saul</h1>
       <ul id="Better-Call-Saul-Temporadas">
         <script language="javascript">
-          getBetterCallSaulEpisodes();
+          // Ver si tiene QueryParams
+          if ((urlParams.get("series")==="Better Call Saul") && urlParams.has("temporada")) {
+            getBetterCallSaulEpisodes(urlParams.get("temporada"));
+          }
+          else {
+            getBetterCallSaulEpisodes(0);
+          }
         </script>
       </ul>
     </div>
+
+     
 </body>
 </html>
