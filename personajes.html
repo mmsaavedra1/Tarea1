@@ -32,13 +32,16 @@
     </div>
     </nav>
     <!--Se despliega la informacion del capitulo-->
-    <div id="Episode">
+    <div id="Personaje">
         <script>
             // Obtener la variable para consultar por la API
             let queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
-            let episodioId = urlParams.get("episodeId");
-            getEpisode(episodioId);
+            let name = urlParams.get("name");
+            /* Funcion para obtener data de personaje 
+            showCharacter(name);
+            */
+
         </script>
     </div>
 </body>
