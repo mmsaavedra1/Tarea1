@@ -1,0 +1,29 @@
+.interior{ display:none; } /* oculta las listas anidadas */
+input:checked ~ ul{display:block;}
+
+#Better-Call-Saul-Temporadas * { list-style:none;}
+#Better-Call-Saul-Temporadas li{ line-height:180%;}
+#Better-Call-Saul-Temporadas li a{color:#222; text-decoration:none;}
+#Better-Call-Saul-Temporadas li a:before{ content:"\025b8"; color:#ddd; margin-right:4px;}
+#Better-Call-Saul-Temporadas input[name="list"] {
+	position: absolute;
+	left: -1000em;
+	}
+#Better-Call-Saul-Temporadas label:before{ content:"\025b8"; margin-right:4px;}
+#Better-Call-Saul-Temporadas input:checked ~ label:before{ content:"\025be";}
+#Better-Call-Saul-Temporadas .interior{display: none;}
+#Better-Call-Saul-Temporadas input:checked ~ ul{display:block;}
+
+
+#Breaking-Bad-Temporadas * { list-style:none;}
+#Breaking-Bad-Temporadas li{ line-height:180%;}
+#Breaking-Bad-Temporadas li a{color:#222; text-decoration:none;}
+#Breaking-Bad-Temporadas li a:before{ content:"\025b8"; color:#ddd; margin-right:4px;}
+#Breaking-Bad-Temporadas input[name="list"] {
+	position: absolute;
+	left: -1000em;
+	}
+#Breaking-Bad-Temporadas label:before{ content:"\025b8"; margin-right:4px;}
+#Breaking-Bad-Temporadas input:checked ~ label:before{ content:"\025be";}
+#Breaking-Bad-Temporadas .interior{display: none;}
+#Breaking-Bad-Temporadas input:checked ~ ul{display:block;}
