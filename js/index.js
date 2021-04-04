@@ -36,7 +36,6 @@ showEpisode = (episode) => {
     div.append(ul)
 }
 
-
 // Funcion para desplegar todas las citas de un personaje
 showQuotes = (quotes) => {
     const div = document.querySelector('#Character');
@@ -45,11 +44,16 @@ showQuotes = (quotes) => {
     h4.innerText = 'Citas:';
     div.append(h4);
 
+    
     let ul= document.createElement("ul");
     html = "";
-    quotes.forEach(quote => {
-       html += `<li>${quote.quote}</li>\n`
-    })
+    if (quotes.length != 0) {
+        quotes.forEach(quote => {
+        html += `<li>${quote.quote}</li>\n`
+        })
+    } else {
+        html = "<li>No hay información de citas para mostrar.</li>"
+    }
     ul.innerHTML = html;
     div.append(ul)
 
@@ -153,4 +157,25 @@ getQuotes = (name) => {
     fetch(`https://tarea-1-breaking-bad.herokuapp.com/api/quote?author=${name}`)
     .then(response => response.json())
     .then(data => showQuotes(data))
+}
+
+// Desplegar todos el resultado de busqueda
+searchCharacter = () => {
+    // Se crea el cuerpo de la busqueda
+    let div = document.querySelector("#Resultado");
+    let h1 = document.createElement("h1");
+
+    // Obtener la variable para consultar por la API
+    let queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    if (urlParams.has("ValorBusquedaName") && urlParams.get("ValorBusquedaName")!="") {
+        let variable = urlParams.get("ValorBusquedaName");
+        // Se agrega el nombre
+        h1.innerText = variable;
+    } else {
+        // Se agreag mensaje de alerta
+        h1.innerText = "No se ha podido cargar la información :("
+        h1.setAttribute("align", "center");
+    }
+    div.append(h1);
 }
