@@ -63,6 +63,8 @@ showQuotes = (quotes) => {
 showCharacter = (character) => {
     const div = document.querySelector('#Character');
 
+    console.log(character);
+
     let img = document.createElement("img");
     img.setAttribute('src', character.img);
     img.setAttribute('width', '30%');
@@ -138,6 +140,7 @@ showCharacter = (character) => {
 
 }
 
+
 // Obtener datos sobre personaje
 getCharacter = (name) => {
     fetch(`https://tarea-1-breaking-bad.herokuapp.com/api/characters?name=${name}`)
@@ -159,10 +162,34 @@ getQuotes = (name) => {
     .then(data => showQuotes(data))
 }
 
+// Tener la busqueda deseada
+const getBusqueda = async function(offset, url) {
+    // El URL que se desea trabajar
+    let actualUrl = url + `&limit=2&offset=${offset}`;
+    
+    // Se retorna con la promesa
+    console.log(actualUrl);
+    let apiResult = await fetch(actualUrl)
+    .then(response => {
+        return response.json();
+    });
+
+    return apiResult;
+}
+
+let getEntrireBusquedaList = async function(offset, url) {
+    let results = await getBusqueda(offset, url);
+    if (results.length > 0) {
+        return results.concat(await getEntrireBusquedaList(offset+2, url));
+    } else {
+        return results;
+    }
+};
+
 // Desplegar todos el resultado de busqueda
-searchCharacter = () => {
+async function searchCharacter () {
     // Se crea el cuerpo de la busqueda
-    let div = document.querySelector("#Resultado");
+    let div = document.querySelector("#Character");
     let h1 = document.createElement("h1");
 
     // Obtener la variable para consultar por la API
@@ -170,8 +197,32 @@ searchCharacter = () => {
     const urlParams = new URLSearchParams(queryString);
     if (urlParams.has("ValorBusquedaName") && urlParams.get("ValorBusquedaName")!="") {
         let variable = urlParams.get("ValorBusquedaName");
-        // Se agrega el nombre
-        h1.innerText = variable;
+        h1.innerText = "Valor de búsqueda: ";
+        // Se realiza la busqueda
+        let urlBase = `https://tarea-1-breaking-bad.herokuapp.com/api/characters?name=${variable}`;
+        (async ()=>{
+
+            const entireList=await getEntrireBusquedaList(0, urlBase);
+            
+            // Se crea en plantilla
+            if (entireList.length != 0) {
+                let ul = document.createElement('ul');
+                html = "";
+                for (let i=0; i<entireList.length; i++) {
+                    html += `<li><a href="personajes.html?name=${entireList[i].name}">${entireList[i].name}</a></li>`;
+                }
+                ul.innerHTML = html;
+                div.append(ul);
+            } else {
+                // Se agreag mensaje de alerta
+                let h3 = document.createElement('h3');
+                h3.innerText = "No hay resultados para la búsqueda ☹️"
+                h3.setAttribute("align", "center");
+                div.append(h3);
+            }
+        
+        })();
+
     } else {
         // Se agreag mensaje de alerta
         h1.innerText = "No se ha podido cargar la información :("
@@ -179,3 +230,39 @@ searchCharacter = () => {
     }
     div.append(h1);
 }
+
+
+/*
+const limitPerPage=20;
+const apiUrl="https://5b5cb0546a725000148a67ab.mockapi.io/api/v1/users";
+
+const getUsers = async function(pageNo = 1) {
+
+let actualUrl=apiUrl + `?page=${pageNo}&limit=${limitPerPage}`;
+var apiResults=await fetch(actualUrl)
+.then(resp=>{
+return resp.json();
+});
+
+return apiResults;
+
+}
+
+const getEntireUserList = async function(pageNo = 1) {
+  const results = await getUsers(pageNo);
+  console.log("Retreiving data from API for page : " + pageNo);
+  if (results.length>0) {
+    return results.concat(await getEntireUserList(pageNo+1));
+  } else {
+    return results;
+  }
+};
+
+
+(async ()=>{
+
+    const entireList=await getEntireUserList();
+    console.log(entireList);
+
+})();
+*/
