@@ -49,13 +49,13 @@ showQuotes = (quotes) => {
     html = "";
     if (quotes.length != 0) {
         quotes.forEach(quote => {
-        html += `<li>${quote.quote}</li>\n`
+        html += `<li>${quote.quote}</li>\n`;
         })
     } else {
-        html = "<li>No hay información de citas para mostrar.</li>"
+        html = "<li>No hay información de citas para mostrar.</li>";
     }
     ul.innerHTML = html;
-    div.append(ul)
+    div.append(ul);
 
 } 
 
@@ -120,6 +120,10 @@ showCharacter = (character) => {
         })
         ulf.innerHTML = html;
         div.append(ulf);
+    } else {
+        let h4c = document.createElement("h4");
+        h4c.innerText = "Este personaje no aparece en Breaking Bad."
+        div.append(h4c);
     }
 
     if (character.better_call_saul_appearance.length != 0) {
@@ -134,6 +138,10 @@ showCharacter = (character) => {
         })
         ulg.innerHTML = html;
         div.append(ulg);
+    } else {
+        let h4c = document.createElement("h4");
+        h4c.innerText = "Este personaje no aparece en Better Call Saul."
+        div.append(h4c)
     }
 
     getQuotes(character.name);
@@ -165,7 +173,7 @@ getQuotes = (name) => {
 // Tener la busqueda deseada
 const getBusqueda = async function(offset, url) {
     // El URL que se desea trabajar
-    let actualUrl = url + `&limit=2&offset=${offset}`;
+    let actualUrl = url + `&limit=10&offset=${offset}`;
     
     // Se retorna con la promesa
     console.log(actualUrl);
@@ -180,7 +188,7 @@ const getBusqueda = async function(offset, url) {
 let getEntrireBusquedaList = async function(offset, url) {
     let results = await getBusqueda(offset, url);
     if (results.length > 0) {
-        return results.concat(await getEntrireBusquedaList(offset+2, url));
+        return results.concat(await getEntrireBusquedaList(offset+10, url));
     } else {
         return results;
     }
