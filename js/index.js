@@ -97,14 +97,22 @@ showCharacter = (character) => {
     let h4b = document.createElement("h4");
     h4b.innerText = 'Actor/Actriz:';
     let uld = document.createElement("ul");
-    uld.innerHTML = `<li>${character.portrayed}</li>`
+    if (character.portrayed) {
+        uld.innerHTML = `<li>${character.portrayed}</li>`
+    } else {
+        uld.innerHTML = '<li>No hay información de su actor/actriz.</li>'
+    }
     div.append(h4b);
     div.append(uld);
 
     let h4c = document.createElement("h4");
     h4c.innerText = 'Estado:';
     let ule = document.createElement("ul");
-    ule.innerHTML = `<li>${character.status}</li>`
+    if (character.status) {
+        ule.innerHTML = `<li>${character.status}</li>`
+    } else {
+        ule.innerHTML = '<li>No hay información de su estado.</li>';
+    }
     div.append(h4c);
     div.append(ule);
 
